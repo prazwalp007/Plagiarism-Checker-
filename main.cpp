@@ -84,7 +84,7 @@ void populateHashTable(const string &checkFiles,  int index, int fileSize, vecto
             }
         }
         for (vector<char>::iterator it = std_word.begin(); it != std_word.end(); it++) {   //change word to lowercase
-            *it = toupper(*it);
+            *it = tolower(*it);
         }
         if (num < 6) {                                //start by making chunk of first six words
             chunk_word.push(string(std_word.begin(), std_word.end()));

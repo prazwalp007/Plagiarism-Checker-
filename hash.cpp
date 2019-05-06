@@ -28,11 +28,11 @@ for (int i = 0; i< TABLESIZE; i++){
 //input parameter - string key
 //output parameter - int index
 int Hash_312:: hash(const string &key){
-    unsigned int sum = 0;
+    unsigned long long sum = 0;
     int index;
 
 for (int i = 0; i < key.length()-1; i++){
-    sum = sum + (int)key[key.length()-i-1]* pow(37,i);
+    sum = sum + (long long)key[key.length()-i-1]* (long long) (pow(37,i)/4);
 }
 
 return sum % TABLESIZE;
@@ -81,22 +81,14 @@ void Hash_312:: insertItem(const string &key, int fileNum){
 //prints the files with similar contents
 //output - none
 void Hash_312::countSimilarItems(int fileSize, vector<string> &files){
-    cout << fileSize<< endl;
-    for (int i = 2; i < fileSize; i++){
-        for (int j = 2; j < fileSize; j++){
-          //  cout << countTable[i][j];
-        }
-        cout<<endl;
-    }
 
     for (int i = 2; i < fileSize; i++){
-    for (int j = 2; j < fileSize; j++){
-        if ((countTable[i][j]) > 200 && (i != j)){
-            cout << countTable[i][j] << " " << files[i] << " "<< files[j]<< endl;
+        for (int j = 2; j < fileSize; j++){
+            if ((countTable[i][j]) > 200 && (i != j)){
+                cout << countTable[i][j] << " " << files[i] << " "<< files[j]<< endl;
+            }
         }
     }
-    cout<<endl;
-}
 
 };
 
