@@ -10,6 +10,7 @@
 #include <fstream>
 #include <bits/stdc++.h>
 #include <math.h>
+#include <algorithm>
 
 
 #include "hash.h"
@@ -32,7 +33,7 @@ int Hash_312:: hash(const string &key){
     int index;
 
 for (int i = 0; i < key.length()-1; i++){
-    sum = sum + (long long)key[key.length()-i-1]* (long long) (pow(37,i)/4);
+    sum = sum + (unsigned long long)key[key.length()-i-1]* (long long) (pow(37,i)/4);
 }
 
 return sum % TABLESIZE;
@@ -80,14 +81,42 @@ void Hash_312:: insertItem(const string &key, int fileNum){
 //input parameters - file size and vector of files
 //prints the files with similar contents
 //output - none
-void Hash_312::countSimilarItems(int fileSize, vector<string> &files){
+void Hash_312::countSimilarItems(int fileSize, vector<string> &files, int minCheating){
+
+
+    struct similarItems {
+        int count;
+        int fileIndex_1;
+        int fileIndex_2;
+
+        bool operator <(const similarItems &a) const{
+            return count < a.count;
+        }
+
+    };
+
+    similarItems item;
+    vector <similarItems> result;
+
 
     for (int i = 2; i < fileSize; i++){
         for (int j = 2; j < fileSize; j++){
-            if ((countTable[i][j]) > 200 && (i != j)){
-                cout << countTable[i][j] << " " << files[i] << " "<< files[j]<< endl;
+            if ((countTable[i][j]) > minCheating && (i != j)){
+               // cout << countTable[i][j] << " " << files[i] << " "<< files[j]<< endl;
+                item.count = countTable[i][j];
+                item.fileIndex_1 = i;
+                item.fileIndex_2 = j;
+                result.push_back(item);
+
             }
         }
+    }
+
+   sort(result.rbegin(), result.rend());
+
+    for (int i = 0; i < result.size(); i ++){
+        cout << result[i].count <<" : ";
+        cout << files[result[i].fileIndex_1] << " and " << files [result[i].fileIndex_2] << endl;
     }
 
 };
